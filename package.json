@@ -1,0 +1,17 @@
+{
+  "name": "nju-unofficial-marp",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test ./test/*.test.mjs",
+    "html": "marp --config-file ./marp.config.mjs --html --output ./dist/demo.html ./slides/demo.md",
+    "pdf": "marp --config-file ./marp.config.mjs --pdf --output ./dist/demo.pdf ./slides/demo.md",
+    "watch": "marp --config-file ./marp.config.mjs --watch --html --output ./dist/demo.html ./slides/demo.md"
+  },
+  "devDependencies": {
+    "@marp-team/marp-cli": "^4.0.0",
+    "@marp-team/marp-core": "^4.0.0",
+    "@marp-team/marpit": "^4.0.0",
+    "markdown-it-container": "^4.0.0"
+  }
+}
