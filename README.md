@@ -55,7 +55,11 @@ Inside a layout slide, use fenced containers:
 
 Caption alignment: `::: caption left`, `::: caption center`, `::: caption right`, or set a slide default with `<!-- _caption_align: right -->`.
 
-Vertical alignment: `<!-- _valign: start -->` top-aligns content in column layouts.
+Vertical alignment of figures in `cols`: `<!-- _valign: start -->` (top), `center` (default), or `end` (bottom).
+
+## Utility classes
+
+Use `<div class="big-center">Thank you</div>` for a large centered line (e.g. on an acknowledgements slide). Requires `html: true` in `marp.config.mjs`.
 
 ## Math
 

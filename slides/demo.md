@@ -385,13 +385,35 @@ Math snippet: `slides/snippets/latex-example.md`
 
 ---
 
+<!-- _layout: cols 1 1 -->
+<!-- _valign: start -->
+
 # Acknowledgements
 
-**Collaborators**: A. Author, B. Coauthor, C. Colleague
+::: col
 
-**Funding**: National Science Foundation of China (Grant No. XXXXXXXX)
+**University of Catburg**
+E. Schr&ouml;dinger, F. Whiskers, G. Pawlov
 
+**Institute for Uncertain Sciences**
+W. Heisenberg, U. Blurry, V. Fuzzystate
+
+**Royal College of Antimatter**
+P. Dirac, Q. Spinor, R. Bra-Ket
+
+:::
+
+::: col
+
+**Funding**
+Quantum Cat Foundation
+Ministry of Entangled Affairs
+
+:::
+
+::: bottom
 <div class="big-center">Thank you</div>
+:::
 
 ::: footer
 April 25, 2026 --- Nanjing, China

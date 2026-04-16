@@ -215,8 +215,15 @@ section[data-layout="cols"] .layout-body {
   align-content: start;
 }
 
-section[data-layout="cols"] .layout-col {
+section[data-layout="cols"] .layout-col:has(> p img),
+section[data-layout="cols"] .layout-col:has(> p picture) {
   display: contents;
+}
+
+section[data-layout="cols"] .layout-col:not(:has(> p img)):not(:has(> p picture)) {
+  grid-row: 1;
+  grid-column: var(--_col);
+  align-self: var(--layout-valign, start);
 }
 
 section[data-layout="cols"] .layout-body > .layout-col:nth-child(1) { --_col: 1; }
@@ -236,7 +243,7 @@ section[data-layout="cols"] .layout-col > p:has(picture) {
   min-height: 0;
   overflow: hidden;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   margin: 0;
 }
@@ -244,6 +251,11 @@ section[data-layout="cols"] .layout-col > p:has(picture) {
 section[data-layout="cols"][data-valign="start"] .layout-col > p:has(img),
 section[data-layout="cols"][data-valign="start"] .layout-col > p:has(picture) {
   align-items: flex-start;
+}
+
+section[data-layout="cols"][data-valign="end"] .layout-col > p:has(img),
+section[data-layout="cols"][data-valign="end"] .layout-col > p:has(picture) {
+  align-items: flex-end;
 }
 
 section[data-layout="cols"] .layout-col > p:not(:has(img)):not(.layout-caption):not(.layout-ref),
