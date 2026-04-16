@@ -204,6 +204,28 @@ function getContainerArgs(info, block) {
   return parts.slice(1).map((part) => part.toLowerCase())
 }
 
+export function parseRange(part) {
+  const match = /^(\d+)(?:-(\d+))?$/.exec(part)
+  if (!match) return null
+  const start = Number(match[1])
+  const end = match[2] != null ? Number(match[2]) : start
+  if (start <= 0 || end <= 0 || end < start) return null
+  return { start, end }
+}
+
+export function parseColSpan(args) {
+  const spanArg = args.find((arg) => /^\d+(?:-\d+)?,\d+(?:-\d+)?$/.test(arg))
+  if (!spanArg) return null
+
+  const [rowPart, colPart] = spanArg.split(',')
+  const rowRange = parseRange(rowPart)
+  const colRange = parseRange(colPart)
+
+  if (!rowRange || !colRange) return null
+
+  return { rowStart: rowRange.start, rowEnd: rowRange.end, colStart: colRange.start, colEnd: colRange.end }
+}
+
 export function buildIgnoredLineSet(tokens) {
   const ignored = new Set()
 
@@ -437,15 +459,26 @@ const layoutEngine = marpitPlugin((md) => {
       render(tokens, idx) {
         const token = tokens[idx]
         const classes = [`layout-${block}`]
+        const styles = []
 
         if (token.nesting === 1 && block === 'caption') {
           const align = getContainerArgs(token.info, block).find((value) => ALIGNMENTS.has(value))
           if (align) classes.push(`align-${align}`)
         }
 
-        return token.nesting === 1
-          ? `<div class="${classes.join(' ')}">`
-          : '</div>'
+        if (token.nesting === 1 && block === 'col') {
+          const args = getContainerArgs(token.info, block)
+          const span = parseColSpan(args)
+          if (span) {
+            styles.push(`--col-row: ${span.rowStart} / ${span.rowEnd + 1}`)
+            styles.push(`--col-col: ${span.colStart} / ${span.colEnd + 1}`)
+          }
+        }
+
+        if (token.nesting !== 1) return '</div>'
+
+        const styleAttr = styles.length > 0 ? ` style="${styles.join('; ')};"` : ''
+        return `<div class="${classes.join(' ')}"${styleAttr}>`
       }
     })
   }

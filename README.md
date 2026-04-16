@@ -75,6 +75,26 @@ Each slide gets one layout directive as an HTML comment:
 
 `cols` accepts any positive numeric sequence. `grid` accepts `ROWSxCOLS`.
 
+### Grid cell spanning
+
+In `grid` layouts, a col can span multiple rows and/or columns:
+
+```markdown
+::: col 1-2,1-2
+Panel spanning rows 1–2, cols 1–2
+:::
+```
+
+Format: `::: col ROW_RANGE,COL_RANGE` where each range is `START-END` (multi-cell) or `START` (single cell).
+
+| Syntax | Meaning |
+|--------|---------|
+| `::: col 1-2,1-2` | Rows 1–2, cols 1–2 |
+| `::: col 1,3` | Row 1, col 3 |
+| `::: col 1-3,1` | Rows 1–3, col 1 |
+
+Cols without a span argument auto-place as before.
+
 ## Containers
 
 Inside a layout slide, use fenced containers:

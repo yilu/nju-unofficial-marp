@@ -306,6 +306,80 @@ Syntax: `<!-- _layout: grid 2x2 -->`
 
 ---
 
+<!-- _layout: grid 2x3 -->
+
+# Grid spanning: merged rectangle
+
+::: col 1-2,1-2
+![w:100%](./figures/wide-b.png)
+
+::: caption
+Spanning rows 1–2, cols 1–2
+:::
+
+:::
+
+::: col 1,3
+![w:100%](./figures/square-a.png)
+
+::: caption
+Row 1, col 3
+:::
+
+:::
+
+::: col 2,3
+![w:100%](./figures/square-b.png)
+
+::: caption
+Row 2, col 3
+:::
+
+:::
+
+::: footer
+Syntax: `::: col 1-2,1-2` places a panel at rows 1–2, cols 1–2.
+:::
+
+---
+
+<!-- _layout: grid 2x2 -->
+
+# Grid spanning: tall left panel
+
+::: col 1-2,1
+![w:100%](./figures/tall-a.png)
+
+::: caption
+Spans both rows in col 1
+:::
+
+:::
+
+::: col 1,2
+![w:100%](./figures/square-a.png)
+
+::: caption
+Top-right cell
+:::
+
+:::
+
+::: col 2,2
+![w:100%](./figures/square-b.png)
+
+::: caption
+Bottom-right cell
+:::
+
+:::
+
+::: footer
+Equivalent of the old `merge-left` class, but general and explicit.
+:::
+
+---
+
 <!-- _layout: cols 1 1 -->
 
 # Shared caption and reference below columns

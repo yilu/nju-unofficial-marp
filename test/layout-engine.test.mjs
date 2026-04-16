@@ -5,7 +5,7 @@ import test from 'node:test'
 import { Marp } from '@marp-team/marp-core'
 
 import config from '../marp.config.mjs'
-import { buildIgnoredLineSet, colIsStillOpenAtCandidateStart } from '../engine/layout-engine.mjs'
+import { buildIgnoredLineSet, colIsStillOpenAtCandidateStart, parseColSpan } from '../engine/layout-engine.mjs'
 
 const fixturePath = new URL('./fixtures/layout-sample.md', import.meta.url)
 
@@ -416,4 +416,142 @@ test('malformed recognized layout directives do not emit layout metadata or css 
     assert.doesNotMatch(slide, /--layout-grid-rows:/)
     assert.doesNotMatch(slide, /--layout-grid-cols:/)
   }
+})
+
+test('parseColSpan parses valid span args', () => {
+  assert.deepEqual(parseColSpan(['1-2,1-3']), { rowStart: 1, rowEnd: 2, colStart: 1, colEnd: 3 })
+  assert.deepEqual(parseColSpan(['1,2']), { rowStart: 1, rowEnd: 1, colStart: 2, colEnd: 2 })
+  assert.deepEqual(parseColSpan(['3-5,1-2']), { rowStart: 3, rowEnd: 5, colStart: 1, colEnd: 2 })
+})
+
+test('parseColSpan rejects invalid span args', () => {
+  assert.equal(parseColSpan([]), null)
+  assert.equal(parseColSpan(['left']), null)
+  assert.equal(parseColSpan(['abc,1']), null)
+  assert.equal(parseColSpan(['2-1,1']), null)
+  assert.equal(parseColSpan(['0,1']), null)
+  assert.equal(parseColSpan(['1,0']), null)
+})
+
+test('col span syntax emits grid placement custom properties', () => {
+  const html = render(`<!-- _layout: grid 2x3 -->
+
+# Spanning grid
+
+::: col 1-2,1-2
+Big panel
+:::
+
+::: col 1,3
+Top-right
+:::
+
+::: col 2,3
+Bottom-right
+:::
+
+::: footer
+Footer
+:::
+`)
+  const [slide] = getSlides(html)
+
+  assert.match(slide, /--col-row:\s*1\s*\/\s*3/)
+  assert.match(slide, /--col-col:\s*1\s*\/\s*3/)
+  assert.match(slide, /--col-row:\s*1\s*\/\s*2.*--col-col:\s*3\s*\/\s*4/)
+  assert.match(slide, /--col-row:\s*2\s*\/\s*3.*--col-col:\s*3\s*\/\s*4/)
+})
+
+test('col without span has no grid placement styles', () => {
+  const html = render(`<!-- _layout: grid 2x2 -->
+
+# No spans
+
+::: col
+Panel 1
+:::
+
+::: col
+Panel 2
+:::
+
+::: col
+Panel 3
+:::
+
+::: col
+Panel 4
+:::
+`)
+  const [slide] = getSlides(html)
+
+  assert.equal((slide.match(/class="[^"]*layout-col[^"]*"/g) ?? []).length, 4)
+  assert.doesNotMatch(slide, /--col-row/)
+  assert.doesNotMatch(slide, /--col-col/)
+})
+
+test('single-cell explicit placement emits correct properties', () => {
+  const html = render(`<!-- _layout: grid 2x2 -->
+
+# Single cell
+
+::: col 1,2
+Explicitly in row 1, col 2
+:::
+
+::: col
+Auto-placed
+:::
+`)
+  const [slide] = getSlides(html)
+
+  assert.match(slide, /--col-row:\s*1\s*\/\s*2.*--col-col:\s*2\s*\/\s*3/)
+  assert.doesNotMatch(slide, /style="[^"]*--col-row[^"]*"[^>]*>[^<]*Auto-placed/)
+})
+
+test('invalid span syntax is silently ignored', () => {
+  const html = render(`<!-- _layout: grid 2x2 -->
+
+# Invalid spans
+
+::: col abc,1
+Bad row
+:::
+
+::: col 2-1,1
+Inverted range
+:::
+
+::: col 0,1
+Zero row
+:::
+
+::: col
+Normal
+:::
+`)
+  const [slide] = getSlides(html)
+
+  assert.doesNotMatch(slide, /--col-row/)
+  assert.doesNotMatch(slide, /--col-col/)
+})
+
+test('span syntax on cols layout is harmless', () => {
+  const html = render(`<!-- _layout: cols 1 1 -->
+
+# Cols with span
+
+::: col 1,1
+Left
+:::
+
+::: col
+Right
+:::
+`)
+  const [slide] = getSlides(html)
+
+  assert.match(slide, /data-layout="cols"/)
+  assert.equal((slide.match(/class="[^"]*layout-col[^"]*"/g) ?? []).length, 2)
+  assert.match(slide, /--col-row/)
 })
