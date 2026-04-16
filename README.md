@@ -20,10 +20,45 @@ Requires Node.js. Marp CLI is installed as a dev dependency.
 
 ## Create your own talk
 
+### Option A: Work inside the repo
+
 1. Copy `slides/demo.md` to a new file (e.g. `slides/my-talk.md`).
 2. Keep the front matter and `theme: nju-unofficial`.
 3. Replace placeholder images under `slides/figures/` with your own.
 4. Update the build commands in `package.json` to point to your file.
+
+### Option B: Work in a separate directory (recommended)
+
+Keep the template repo untouched and create your talk alongside it:
+
+```
+parent/
+├── nju-unofficial-marp/   # cloned template (don't edit)
+└── my-talk/
+    ├── marp.config.mjs    # points to the template
+    ├── slides.md           # your talk
+    └── figures/            # your figures
+```
+
+Create `marp.config.mjs` in your talk directory:
+
+```js
+import layoutEngine from '../nju-unofficial-marp/engine/layout-engine.mjs'
+
+export default {
+  allowLocalFiles: true,
+  html: true,
+  themeSet: '../nju-unofficial-marp/themes',
+  engine: ({ marp }) => marp.use(layoutEngine)
+}
+```
+
+Then build with:
+
+```bash
+npx @marp-team/marp-cli --config-file ./marp.config.mjs --pdf slides.md
+npx @marp-team/marp-cli --config-file ./marp.config.mjs --html slides.md
+```
 
 ## Layout directives
 
