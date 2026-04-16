@@ -396,7 +396,7 @@ section .layout-ref em {
 }
 
 section::after {
-  content: attr(data-marpit-pagination);
+  content: attr(data-marpit-pagination) "/" attr(data-marpit-pagination-total);
   position: absolute;
   right: var(--nju-side-pad);
   bottom: var(--nju-footer-baseline);
@@ -456,9 +456,7 @@ section.title-slide > h1 {
   margin: 0;
   background: var(--nju-purple);
   color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   text-align: center;
   font-size: 2.18em;
   font-weight: 400;
@@ -519,4 +517,16 @@ section.title-slide .layout-footer {
   bottom: var(--nju-footer-baseline);
   text-align: center;
   justify-content: center;
+}
+
+section.merge-left[data-layout="grid"] .layout-body {
+  grid-template-columns: 3fr 2fr 2fr;
+}
+
+section.merge-left[data-layout="grid"] .layout-body > .layout-col:first-child {
+  grid-row: 1 / -1;
+}
+
+section.merge-left[data-layout="grid"] .layout-body > .layout-col:first-child .layout-ref {
+  margin-top: auto;
 }
