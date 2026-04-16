@@ -287,39 +287,29 @@ section[data-layout="cols"] .layout-col > p:has(img) img {
 section[data-layout="grid"] .layout-body {
   display: grid;
   grid-template-columns: repeat(var(--layout-grid-cols, 2), minmax(0, 1fr));
-  grid-template-rows: repeat(var(--layout-grid-rows, 2), 1fr auto auto);
-  gap: 4px 22px;
+  grid-template-rows: repeat(var(--layout-grid-rows, 2), minmax(0, 1fr));
+  gap: 18px 22px;
   align-items: stretch;
+  overflow: visible;
 }
 
 section[data-layout="grid"] .layout-col {
-  grid-row: var(--col-row, span 3);
+  grid-row: var(--col-row, auto);
   grid-column: var(--col-col, auto);
-  display: grid;
-  grid-template-rows: subgrid;
-  row-gap: 4px;
-}
-
-section[data-layout="grid"] .layout-col > p:has(img),
-section[data-layout="grid"] .layout-col > p:has(picture) {
-  min-height: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 section[data-layout="grid"] .layout-col > .layout-caption {
-  align-self: start;
+  margin-top: auto;
+}
+
+section[data-layout="grid"] .layout-col > .layout-ref:not(.layout-caption ~ .layout-ref) {
+  margin-top: auto;
 }
 
 section[data-layout="grid"] .layout-col > .layout-ref {
-  align-self: start;
-}
-
-section[data-layout="grid"] .layout-col > p:not(:has(img)):not(.layout-caption):not(.layout-ref),
-section[data-layout="grid"] .layout-col > ul,
-section[data-layout="grid"] .layout-col > ol,
-section[data-layout="grid"] .layout-col > pre,
-section[data-layout="grid"] .layout-col > blockquote {
-  grid-row: 1;
+  max-height: 1.16em;
+  overflow: visible;
 }
 
 section .layout-col {
