@@ -10,10 +10,10 @@
   --nju-paper: #ffffff;
   --nju-rule: #e4d9e1;
   --nju-title-zone: 84px;
-  --nju-footer-zone: 68px;
+  --nju-footer-zone: 46px;
   --nju-side-pad: 32px;
   --nju-footer-baseline: 18px;
-  --nju-content-height: calc(720px - 24px - var(--nju-title-zone) - 20px - var(--nju-footer-zone));
+  --nju-content-height: calc(720px - 24px - var(--nju-title-zone) - 8px - var(--nju-footer-zone));
 }
 
 section {
@@ -29,7 +29,7 @@ section {
   padding:
     calc(24px + var(--nju-title-zone))
     var(--nju-side-pad)
-    calc(20px + var(--nju-footer-zone))
+    calc(8px + var(--nju-footer-zone))
     var(--nju-side-pad);
 }
 
@@ -164,7 +164,7 @@ section .layout-stack {
   left: var(--nju-side-pad);
   right: var(--nju-side-pad);
   top: calc(24px + var(--nju-title-zone));
-  bottom: calc(20px + var(--nju-footer-zone));
+  bottom: calc(8px + var(--nju-footer-zone));
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -287,14 +287,39 @@ section[data-layout="cols"] .layout-col > p:has(img) img {
 section[data-layout="grid"] .layout-body {
   display: grid;
   grid-template-columns: repeat(var(--layout-grid-cols, 2), minmax(0, 1fr));
-  grid-template-rows: repeat(var(--layout-grid-rows, 2), minmax(0, 1fr));
-  gap: 18px 22px;
+  grid-template-rows: repeat(var(--layout-grid-rows, 2), 1fr auto auto);
+  gap: 4px 22px;
   align-items: stretch;
 }
 
 section[data-layout="grid"] .layout-col {
-  grid-row: var(--col-row, auto);
+  grid-row: var(--col-row, span 3);
   grid-column: var(--col-col, auto);
+  display: grid;
+  grid-template-rows: subgrid;
+  row-gap: 4px;
+}
+
+section[data-layout="grid"] .layout-col > p:has(img),
+section[data-layout="grid"] .layout-col > p:has(picture) {
+  min-height: 0;
+  overflow: hidden;
+}
+
+section[data-layout="grid"] .layout-col > .layout-caption {
+  align-self: start;
+}
+
+section[data-layout="grid"] .layout-col > .layout-ref {
+  align-self: start;
+}
+
+section[data-layout="grid"] .layout-col > p:not(:has(img)):not(.layout-caption):not(.layout-ref),
+section[data-layout="grid"] .layout-col > ul,
+section[data-layout="grid"] .layout-col > ol,
+section[data-layout="grid"] .layout-col > pre,
+section[data-layout="grid"] .layout-col > blockquote {
+  grid-row: 1;
 }
 
 section .layout-col {

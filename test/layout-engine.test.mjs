@@ -456,10 +456,10 @@ Footer
 `)
   const [slide] = getSlides(html)
 
-  assert.match(slide, /--col-row:\s*1\s*\/\s*3/)
+  assert.match(slide, /--col-row:\s*1\s*\/\s*7/)
   assert.match(slide, /--col-col:\s*1\s*\/\s*3/)
-  assert.match(slide, /--col-row:\s*1\s*\/\s*2.*--col-col:\s*3\s*\/\s*4/)
-  assert.match(slide, /--col-row:\s*2\s*\/\s*3.*--col-col:\s*3\s*\/\s*4/)
+  assert.match(slide, /--col-row:\s*1\s*\/\s*4.*--col-col:\s*3\s*\/\s*4/)
+  assert.match(slide, /--col-row:\s*4\s*\/\s*7.*--col-col:\s*3\s*\/\s*4/)
 })
 
 test('col without span has no grid placement styles', () => {
@@ -505,7 +505,7 @@ Auto-placed
 `)
   const [slide] = getSlides(html)
 
-  assert.match(slide, /--col-row:\s*1\s*\/\s*2.*--col-col:\s*2\s*\/\s*3/)
+  assert.match(slide, /--col-row:\s*1\s*\/\s*4.*--col-col:\s*2\s*\/\s*3/)
   assert.doesNotMatch(slide, /style="[^"]*--col-row[^"]*"[^>]*>[^<]*Auto-placed/)
 })
 

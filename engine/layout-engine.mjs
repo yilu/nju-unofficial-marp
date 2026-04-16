@@ -470,7 +470,9 @@ const layoutEngine = marpitPlugin((md) => {
           const args = getContainerArgs(token.info, block)
           const span = parseColSpan(args)
           if (span) {
-            styles.push(`--col-row: ${span.rowStart} / ${span.rowEnd + 1}`)
+            const subRowStart = (span.rowStart - 1) * 3 + 1
+            const subRowEnd = span.rowEnd * 3 + 1
+            styles.push(`--col-row: ${subRowStart} / ${subRowEnd}`)
             styles.push(`--col-col: ${span.colStart} / ${span.colEnd + 1}`)
           }
         }
