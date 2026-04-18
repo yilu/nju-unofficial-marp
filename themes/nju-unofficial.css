@@ -67,6 +67,13 @@ section a {
   color: var(--nju-purple);
 }
 
+section table {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.3em 0.6em;
+}
+
 section img {
   display: block;
   max-width: 100%;
@@ -153,10 +160,13 @@ section mjx-container {
 
 section mjx-container[display="true"] {
   margin: 0.15em 0 !important;
+  display: block !important;
+  text-align: center !important;
 }
 
-section p:has(> mjx-container[display="true"]) {
-  margin: 0.4em 0;
+section mjx-container[display="true"] > svg {
+  display: inline-block !important;
+  width: auto !important;
 }
 
 section .layout-stack {
