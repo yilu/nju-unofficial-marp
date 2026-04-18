@@ -555,3 +555,123 @@ Right
   assert.equal((slide.match(/class="[^"]*layout-col[^"]*"/g) ?? []).length, 2)
   assert.match(slide, /--col-row/)
 })
+
+test('grid with custom column widths emits --layout-cols', () => {
+  const html = render(`<!-- _layout: grid 2x2 60 40 -->
+
+# Custom widths
+
+::: col
+A
+:::
+
+::: col
+B
+:::
+
+::: col
+C
+:::
+
+::: col
+D
+:::
+`)
+  const [slide] = getSlides(html)
+
+  assert.match(slide, /data-layout="grid"/)
+  assert.match(slide, /data-grid="2x2"/)
+  assert.match(slide, /--layout-cols:\s*60fr 40fr/)
+  assert.equal((slide.match(/class="[^"]*layout-col[^"]*"/g) ?? []).length, 4)
+})
+
+test('grid with wrong number of widths is rejected', () => {
+  const html = render(`<!-- _layout: grid 2x2 60 40 20 -->
+
+# Wrong count
+
+::: col
+A
+:::
+`)
+  const [slide] = getSlides(html)
+
+  assert.doesNotMatch(slide, /data-layout=/)
+  assert.doesNotMatch(slide, /--layout-cols/)
+})
+
+test('grid with non-numeric widths is rejected', () => {
+  const html = render(`<!-- _layout: grid 2x2 wide narrow -->
+
+# Bad widths
+`)
+  const [slide] = getSlides(html)
+
+  assert.doesNotMatch(slide, /data-layout=/)
+})
+
+test('grid with custom row heights emits --layout-rows', () => {
+  const html = render(`<!-- _layout: grid 2x2 / 70 30 -->
+
+# Custom rows
+
+::: col
+A
+:::
+
+::: col
+B
+:::
+
+::: col
+C
+:::
+
+::: col
+D
+:::
+`)
+  const [slide] = getSlides(html)
+
+  assert.match(slide, /data-layout="grid"/)
+  assert.match(slide, /--layout-rows:\s*70fr 30fr/)
+  assert.doesNotMatch(slide, /--layout-cols:/)
+})
+
+test('grid with custom column widths and row heights emits both', () => {
+  const html = render(`<!-- _layout: grid 2x2 60 40 / 70 30 -->
+
+# Both custom
+
+::: col
+A
+:::
+
+::: col
+B
+:::
+
+::: col
+C
+:::
+
+::: col
+D
+:::
+`)
+  const [slide] = getSlides(html)
+
+  assert.match(slide, /data-layout="grid"/)
+  assert.match(slide, /--layout-cols:\s*60fr 40fr/)
+  assert.match(slide, /--layout-rows:\s*70fr 30fr/)
+})
+
+test('grid with wrong number of row heights is rejected', () => {
+  const html = render(`<!-- _layout: grid 2x2 / 70 30 10 -->
+
+# Wrong row count
+`)
+  const [slide] = getSlides(html)
+
+  assert.doesNotMatch(slide, /data-layout=/)
+})

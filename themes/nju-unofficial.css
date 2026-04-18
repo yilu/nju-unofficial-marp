@@ -286,8 +286,8 @@ section[data-layout="cols"] .layout-col > p:has(img) img {
 
 section[data-layout="grid"] .layout-body {
   display: grid;
-  grid-template-columns: repeat(var(--layout-grid-cols, 2), minmax(0, 1fr));
-  grid-template-rows: repeat(var(--layout-grid-rows, 2), minmax(0, 1fr));
+  grid-template-columns: var(--layout-cols, repeat(var(--layout-grid-cols, 2), minmax(0, 1fr)));
+  grid-template-rows: var(--layout-rows, repeat(var(--layout-grid-rows, 2), minmax(0, 1fr)));
   gap: 18px 22px;
   align-items: stretch;
   overflow: visible;

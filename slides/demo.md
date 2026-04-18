@@ -46,7 +46,7 @@ Use one layout directive, then compose the slide from `col`, `caption`, `ref`, `
 # Two-panel figure
 
 ::: col
-![w:100%](./figures/wide-a.png)
+![](./figures/wide-a.png)
 
 ::: caption
 Left message.
@@ -59,7 +59,7 @@ Left ref.
 :::
 
 ::: col
-![w:100%](./figures/tall-a.png)
+![](./figures/tall-a.png)
 :::
 
 ::: footer
@@ -78,7 +78,7 @@ Supported directives: `single`, `cols ...`, and `grid RxC`.
 # Single layout example
 
 ::: col
-![w:100%](./figures/wide-a.png)
+![](./figures/wide-a.png)
 
 ::: caption
 `single` centers one panel and keeps the main message directly under it.
@@ -100,7 +100,7 @@ Syntax: `<!-- _layout: single -->`
 # Two-column example
 
 ::: col
-![w:100%](./figures/wide-a.png)
+![](./figures/wide-a.png)
 
 ::: caption
 Use the left panel for setup or comparison A.
@@ -112,7 +112,7 @@ Per-panel refs can stay attached to the panel.
 :::
 
 ::: col
-![w:100%](./figures/square-a.png)
+![](./figures/square-a.png)
 
 ::: caption
 Use the right panel for comparison B.
@@ -135,7 +135,7 @@ Syntax: `<!-- _layout: cols 1 1 -->`
 # Figure and text in one row
 
 ::: col
-![w:100%](./figures/wide-b.png)
+![](./figures/wide-b.png)
 
 ::: caption
 Left: the main panel.
@@ -176,7 +176,7 @@ Top text can introduce the slide before the columns.
 :::
 
 ::: col
-![w:100%](./figures/tall-a.png)
+![](./figures/tall-a.png)
 
 ::: caption
 Right: a panel with a caption.
@@ -200,7 +200,7 @@ Supports `top` above the body and `bottom` below it.
 # Caption alignment control
 
 ::: col
-![w:100%](./figures/square-a.png)
+![](./figures/square-a.png)
 
 ::: caption
 This caption follows the slide default and aligns right.
@@ -209,7 +209,7 @@ This caption follows the slide default and aligns right.
 :::
 
 ::: col
-![w:100%](./figures/square-b.png)
+![](./figures/square-b.png)
 
 ::: caption left
 This caption overrides the slide default and aligns left.
@@ -228,7 +228,7 @@ Use `::: caption left` or `::: caption right`; slide default: `<!-- _caption_ali
 # Three-column example
 
 ::: col
-![w:100%](./figures/square-a.png)
+![](./figures/square-a.png)
 
 ::: caption
 Three equal columns work well for compact comparisons.
@@ -237,7 +237,7 @@ Three equal columns work well for compact comparisons.
 :::
 
 ::: col
-![w:100%](./figures/square-b.png)
+![](./figures/square-b.png)
 
 ::: caption
 Keep each message to one short line.
@@ -246,7 +246,7 @@ Keep each message to one short line.
 :::
 
 ::: col
-![w:100%](./figures/square-a.png)
+![](./figures/square-a.png)
 
 ::: caption
 `cols` accepts any positive numeric sequence.
@@ -265,7 +265,7 @@ Syntax: `<!-- _layout: cols 1 1 1 -->`
 # 2x2 grid example
 
 ::: col
-![w:100%](./figures/square-a.png)
+![](./figures/square-a.png)
 
 ::: caption
 Panel 1
@@ -274,7 +274,7 @@ Panel 1
 :::
 
 ::: col
-![w:100%](./figures/square-b.png)
+![](./figures/square-b.png)
 
 ::: caption
 Panel 2
@@ -283,7 +283,7 @@ Panel 2
 :::
 
 ::: col
-![w:100%](./figures/square-a.png)
+![](./figures/square-a.png)
 
 ::: caption
 Panel 3
@@ -292,7 +292,7 @@ Panel 3
 :::
 
 ::: col
-![w:100%](./figures/square-b.png)
+![](./figures/square-b.png)
 
 ::: caption
 Panel 4
@@ -311,7 +311,7 @@ Syntax: `<!-- _layout: grid 2x2 -->`
 # Grid spanning: merged rectangle
 
 ::: col 1-2,1-2
-![w:100%](./figures/wide-b.png)
+![](./figures/wide-b.png)
 
 ::: caption
 Spanning rows 1–2, cols 1–2
@@ -320,7 +320,7 @@ Spanning rows 1–2, cols 1–2
 :::
 
 ::: col 1,3
-![w:100%](./figures/square-a.png)
+![](./figures/square-a.png)
 
 ::: caption
 Row 1, col 3
@@ -329,7 +329,7 @@ Row 1, col 3
 :::
 
 ::: col 2,3
-![w:100%](./figures/square-b.png)
+![](./figures/square-b.png)
 
 ::: caption
 Row 2, col 3
@@ -348,7 +348,7 @@ Syntax: `::: col 1-2,1-2` places a panel at rows 1–2, cols 1–2.
 # Grid spanning: tall left panel
 
 ::: col 1-2,1
-![w:100%](./figures/tall-a.png)
+![](./figures/tall-a.png)
 
 ::: caption
 Spans both rows in col 1
@@ -357,7 +357,7 @@ Spans both rows in col 1
 :::
 
 ::: col 1,2
-![w:100%](./figures/square-a.png)
+![](./figures/square-a.png)
 
 ::: caption
 Top-right cell
@@ -366,7 +366,7 @@ Top-right cell
 :::
 
 ::: col 2,2
-![w:100%](./figures/square-b.png)
+![](./figures/square-b.png)
 
 ::: caption
 Bottom-right cell
@@ -385,7 +385,7 @@ Equivalent of the old `merge-left` class, but general and explicit.
 # Shared caption and reference below columns
 
 ::: col
-![w:100%](./figures/tall-b.png)
+![](./figures/tall-b.png)
 
 ::: caption
 Panel A
@@ -394,7 +394,7 @@ Panel A
 :::
 
 ::: col
-![w:100%](./figures/square-b.png)
+![](./figures/square-b.png)
 
 ::: caption
 Panel B

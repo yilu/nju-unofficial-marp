@@ -27,7 +27,7 @@ function parseLayout(value) {
   }
 
   if (kind === 'grid') {
-    if (rest.length !== 1) return {}
+    if (rest.length < 1) return {}
 
     const match = /^(\d+)x(\d+)$/i.exec(rest[0] ?? '')
 
@@ -39,12 +39,33 @@ function parseLayout(value) {
 
     if (rowCount <= 0 || colCount <= 0) return {}
 
-    return {
+    const args = rest.slice(1)
+    const slashIndex = args.indexOf('/')
+    const colArgs = slashIndex === -1 ? args : args.slice(0, slashIndex)
+    const rowArgs = slashIndex === -1 ? [] : args.slice(slashIndex + 1)
+
+    const result = {
       layout: 'grid',
       grid: `${rows}x${cols}`,
       layoutGridRows: rows,
       layoutGridCols: cols
     }
+
+    if (colArgs.length > 0) {
+      if (colArgs.length !== colCount) return {}
+      const widths = colArgs.map((part) => Number(part))
+      if (widths.some((w) => !Number.isFinite(w) || w <= 0)) return {}
+      result.layoutCols = widths.map((w) => `${w}fr`).join(' ')
+    }
+
+    if (rowArgs.length > 0) {
+      if (rowArgs.length !== rowCount) return {}
+      const heights = rowArgs.map((part) => Number(part))
+      if (heights.some((h) => !Number.isFinite(h) || h <= 0)) return {}
+      result.layoutRows = heights.map((h) => `${h}fr`).join(' ')
+    }
+
+    return result
   }
 
   return {}
@@ -289,6 +310,7 @@ function applySlideMetadata(token) {
     directives.layoutCols ? `--layout-cols: ${directives.layoutCols}` : '',
     directives.layoutGridRows ? `--layout-grid-rows: ${directives.layoutGridRows}` : '',
     directives.layoutGridCols ? `--layout-grid-cols: ${directives.layoutGridCols}` : '',
+    directives.layoutRows ? `--layout-rows: ${directives.layoutRows}` : '',
     directives.captionAlign ? `--layout-caption-align: ${directives.captionAlign}` : '',
     directives.valign ? `--layout-valign: ${directives.valign}` : ''
   ])

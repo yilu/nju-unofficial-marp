@@ -9,7 +9,7 @@ paginate: false
 # Basic layout snippet
 
 ::: col
-![w:100%](../figures/wide-a.png)
+![](../figures/wide-a.png)
 
 ::: caption
 Left-panel message.
@@ -22,7 +22,7 @@ Optional left-panel reference.
 :::
 
 ::: col
-![w:100%](../figures/square-a.png)
+![](../figures/square-a.png)
 
 ::: caption
 Right-panel message.
